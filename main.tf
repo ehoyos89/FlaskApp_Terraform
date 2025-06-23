@@ -186,13 +186,14 @@ resource "aws_instance" "flask_app" {
   iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
 
   user_data = templatefile("${path.module}/user_data.sh", {
+    aws_region = var.aws_region
     project_name = var.project_name
     db_endpoint = aws_db_instance.mysql_db.endpoint
     db_name = var.db_name
     photos_bucket = aws_s3_bucket.photos_bucket.bucket
-    db_user = jsondecode(aws_secretsmanager_secret_version.db_credentials_version.secret_string)["username"]
-    db_password = jsondecode(aws_secretsmanager_secret_version.db_credentials_version.secret_string)["password"]
-    flask_secret_key = jsondecode(aws_secretsmanager_secret_version.flask_secret_key_version.secret_string)["secret_key"]
+    db_username_secret_arn    = aws_secretsmanager_secret.db_credentials.arn
+    db_password_secret_arn    = aws_secretsmanager_secret.db_credentials.arn
+    flask_secret_key_secret_arn = aws_secretsmanager_secret.flask_secret_key.arn
   })
   tags = {
     Name = "${var.project_name}-flask-app"
