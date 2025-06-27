@@ -1,9 +1,10 @@
 # Generate a random password for the database
 resource "random_password" "db_password" {
   length  = 16
-  special = true
+  special = false
   upper   = true
   lower   = true
+  numeric = true
 }
 
 resource "aws_secretsmanager_secret" "db_credentials" {
@@ -23,7 +24,7 @@ resource "aws_secretsmanager_secret_version" "db_credentials_version" {
 # Generate a random password for the flask application
 resource "random_password" "flask_app_password" {
   length  = 16
-  special = true
+  special = false
   upper   = true
   lower   = true
 }

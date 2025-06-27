@@ -65,6 +65,13 @@ resource "aws_security_group" "ec2_sg" {
     description = "Allow SSH access"
   }
   ingress {
+    from_port = 8000
+    to_port = 8000
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow Flask app access"
+  }
+  ingress {
     from_port = 80
     to_port = 80
     protocol = "tcp"
@@ -189,6 +196,7 @@ resource "aws_instance" "flask_app" {
     aws_region = var.aws_region
     project_name = var.project_name
     db_endpoint = aws_db_instance.mysql_db.endpoint
+    db_host_only = split(":", aws_db_instance.mysql_db.endpoint)[0]
     db_name = var.db_name
     photos_bucket = aws_s3_bucket.photos_bucket.bucket
     db_username_secret_arn    = aws_secretsmanager_secret.db_credentials.arn

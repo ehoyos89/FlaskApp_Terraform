@@ -26,7 +26,7 @@ variable "subnet_cidr_block" {
 variable "ami_id" {
   description = "The AMI ID to use for the EC2 instance"
   type        = string
-  default     = "ami-0b28354031edf7b09" # Amazon Linux 2 AMI (HVM) - Kernel 5.10, SSD Volume Type
+  default     = "ami-0f3f13f145e66a0a3" # Amazon Linux 2 AMI (HVM) - Kernel 5.10, SSD Volume Type
   
 }
 
@@ -45,7 +45,7 @@ variable "key_name" {
 variable "db_instance_class" {
   description = "The instance class for the RDS database"
   type        = string
-  default     = "db.t2.micro"
+  default     = "db.t4g.micro"
 }
 
 variable "db_allocated_storage" {
@@ -57,7 +57,7 @@ variable "db_allocated_storage" {
 variable "db_engine_version" {
   description = "The version of the RDS database engine"
   type = string
-  default = "mysql-8.0" # Puedes cambiar a la versión que necesites
+  default = "8.0.41" # Puedes cambiar a la versión que necesites
 }
 
 variable "db_name" {
